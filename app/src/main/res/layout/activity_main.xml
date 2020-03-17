@@ -32,13 +32,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="100dp"
-        android:text="Play Recording" />
+        android:text="Play Recorded Audio" />
 
     <Button
         android:id="@+id/pushtodbbut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Push to db"></Button>
+        android:text="Submit to save"></Button>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -112,16 +112,16 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-        //play button
+        //play button to listen to recorded audio
         playbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
                     String path=Environment.getExternalStorageDirectory().getAbsolutePath();
-                    path+="/fetched_data.3gp";
+                    path+="/AudioRecording.3gp";
 
                     textView.setText("fetching start");
-                    retriveaudio();
+                    //retriveaudio();
                     textView.setText("fetching done");
                     mPlayer = new MediaPlayer();
                     mPlayer.setDataSource(path);
@@ -141,6 +141,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 DataAudio dataAudio= new DataAudio();
                 dataAudio.updateaudio(mFileName,textdata,data_intent);
+                textView.setText("data inserted");
+                textView.setVisibility(View.VISIBLE);
+
                 finish();
                 startActivity(getIntent());
             }});
@@ -179,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
         File file=new File(path);
         FileOutputStream outputStream=new FileOutputStream(file);
         try {
-            String sql = "select * from english where textdata='"+"Tom"+"'";
+            String sql = "select * from English where flag='"+"no"+"' limit 1";
             Statement statement = null;
                 conn=MyTask.getCon();
                 statement = conn.createStatement();
@@ -196,8 +199,9 @@ public class MainActivity extends AppCompatActivity {
                 }
 
 
-            textView.setText("data inserted");
+            textView.setText("data fetched");
             textView.setVisibility(View.VISIBLE);
+
 
 
         }catch(Exception e)
