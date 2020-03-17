@@ -61,12 +61,10 @@ public class startActivity extends AppCompatActivity implements AdapterView.OnIt
                     }
                     case "Hindi":
                     {
-                        //TODO:implement hindi language stuff
                         Toast.makeText(startActivity.this,"Hindi Selected",Toast.LENGTH_SHORT).show();
 
                         break;
                     }
-                    //todo implement rest of the languages
                     default:
                     {
                         Toast.makeText(startActivity.this,"Please select a language...",Toast.LENGTH_SHORT).show();

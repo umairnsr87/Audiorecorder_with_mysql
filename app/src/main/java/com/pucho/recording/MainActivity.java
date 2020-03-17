@@ -13,6 +13,7 @@ import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -132,8 +133,15 @@ public class MainActivity extends AppCompatActivity {
                         Log.e("audio tag pucho", e.getMessage());
                     }finally {
 
-                    mPlayer.stop();
-                    mPlayer.release();
+                    //emptying the resources after 20 seconds
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mPlayer.stop();
+                            mPlayer.release();
+                        }
+                    }, 20000);
+
                 }
 
                 }

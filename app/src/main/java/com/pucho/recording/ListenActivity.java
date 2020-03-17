@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -39,6 +40,7 @@ public class ListenActivity extends AppCompatActivity {
         textdata=listenSetter.setTextView(data_intent);
         setteraudiotext.setVisibility(View.VISIBLE);
 
+
         //playing the audio after fetching it from db
         btnplay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,8 +61,14 @@ public class ListenActivity extends AppCompatActivity {
                     Log.e("exception occured audio",e.getMessage());
                     e.printStackTrace();
                 }finally {
-//                    mPlayer.stop();
-//                    mPlayer.release();
+                    //emptying the resources after 20seconds
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mPlayer.stop();
+                            mPlayer.release();
+                        }
+                    }, 20000);
 
                 }
 
