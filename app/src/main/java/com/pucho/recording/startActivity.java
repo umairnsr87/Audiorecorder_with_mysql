@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -35,7 +36,9 @@ public class startActivity extends AppCompatActivity implements AdapterView.OnIt
                     {
                         Intent i = new Intent(startActivity.this, MainActivity.class);
                         i.putExtra("values", str);
+                        Log.i("Intent extra",str);
                         startActivity(i);
+                        finish();
                         break;
                     }
                     case "Hindi":
@@ -49,9 +52,6 @@ public class startActivity extends AppCompatActivity implements AdapterView.OnIt
                         Toast.makeText(startActivity.this,"Please select a language...",Toast.LENGTH_SHORT).show();
                     }
 
-
-                }
-                if(str.equals("English")) {
 
                 }
 

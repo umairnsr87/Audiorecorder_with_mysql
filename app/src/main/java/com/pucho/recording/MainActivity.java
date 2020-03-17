@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -37,19 +38,35 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button startbtn, stopbtn, playbtn, stopplay;
+    private Button startbtn, playbtn;
     private MediaRecorder mRecorder;
     private Button dbbut;
     private TextView textView;
     private MediaPlayer mPlayer;
-    private static final String LOG_TAG = "AudioRecording";
+    //private static final String LOG_TAG = "AudioRecording";
     private static String mFileName = null;
     public static final int REQUEST_AUDIO_PERMISSION_CODE = 1;
+    private TextView settertext;
     Connection conn=null;
+    String data_intent=null;
+    String textdata=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //getting teh data from intent
+
+        Intent intent=getIntent();
+        data_intent=intent.getStringExtra("values");
+        Log.i("data_intent",data_intent);
+
+        DataAudio da=new DataAudio();
+        textdata=da.textFetcher(data_intent);
+
+        //setting the text data to setter text
+        settertext=findViewById(R.id.setteraudiotext);
+        settertext.setText(textdata);
 
         playbtn=findViewById(R.id.btnPlay);
         startbtn = (Button)findViewById(R.id.btnRecord);
@@ -73,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             mRecorder.prepare();
                         } catch (IOException e) {
-                            Log.e(LOG_TAG, "prepare() failed");
+                            Log.e("Media Tag", "prepare() failed");
                         }
                         mRecorder.start();
                         Toast.makeText(getApplicationContext(), "Recording Started", Toast.LENGTH_LONG).show();
@@ -90,13 +107,12 @@ public class MainActivity extends AppCompatActivity {
                     mRecorder = null;
                     Toast.makeText(getApplicationContext(), "Recording Stopped", Toast.LENGTH_LONG).show();
 
-
-
                 }
 
                 return false;
             }
         });
+        //play button
         playbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,17 +134,17 @@ public class MainActivity extends AppCompatActivity {
 
                 }
         });
-//
+
+        //saving the recorded audio to database
         dbbut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                updateaudio(mFileName);
-                Log.d("length", mFileName);
+                DataAudio dataAudio= new DataAudio();
+                dataAudio.updateaudio(mFileName,textdata,data_intent);
+                finish();
+                startActivity(getIntent());
             }});
-
-
-}
+    }
 
 
     @Override
@@ -156,47 +172,7 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(MainActivity.this, new String[]{RECORD_AUDIO, WRITE_EXTERNAL_STORAGE}, REQUEST_AUDIO_PERMISSION_CODE);
     }
 
-    public void updateaudio(String path)
-    {
-        //Uri uri=Uri.fromFile(new File(mFileName));
-
-        Log.d("uri is ",mFileName);
-
-        try {
-            String sql = "INSERT INTO  english(textdata, audio) values(?, ?)";
-            PreparedStatement statement = null;
-            try {
-                conn=MyTask.getCon();
-                statement = conn.prepareStatement(sql);
-                statement.setString(1, "Tom");
-               File file=new File(path);
-                InputStream inputStream = new FileInputStream(file);
-                Log.d("Input stream",inputStream.toString());
-                statement.setBinaryStream(2,inputStream,file.length());
-                statement.executeUpdate();
-            } catch (SQLException e) {
-                Log.e("Exception occured",e.getMessage());
-                e.printStackTrace();
-            }
-            textView.setText("data inserted");
-            textView.setVisibility(View.VISIBLE);
-
-
-        }catch(Exception e)
-        {
-            Log.e("Exception occured",e.getMessage());
-        }finally
-        {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                Log.e("Exception occured",e.getMessage());
-                e.printStackTrace();
-            }
-        }
-
-    }
-
+//function to retrive audio from db to hear
     public void retriveaudio() throws IOException {
         String path=Environment.getExternalStorageDirectory().getAbsolutePath();
         path+="/fetched_data.3gp";
@@ -205,8 +181,6 @@ public class MainActivity extends AppCompatActivity {
         try {
             String sql = "select * from english where textdata='"+"Tom"+"'";
             Statement statement = null;
-
-            try {
                 conn=MyTask.getCon();
                 statement = conn.createStatement();
                 ResultSet rs=statement.executeQuery(sql);
@@ -221,10 +195,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
-                } catch (SQLException e) {
-                Log.e("Exception occured",e.getMessage());
-                e.printStackTrace();
-            }
+
             textView.setText("data inserted");
             textView.setVisibility(View.VISIBLE);
 
