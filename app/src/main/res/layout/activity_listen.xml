@@ -4,45 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_vertical|center_horizontal"
     android:orientation="vertical"
-    tools:context=".MainActivity">
-
-
+    tools:context=".ListenActivity">
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Speak the text here"
-        android:id="@+id/setteraudiotext"
+        android:id="@+id/setteraudiotextlisten"
         android:visibility="visible">
 
     </TextView>
+
+
+
     <Button
-        android:id="@+id/btnRecord"
+        android:id="@+id/btnlisten"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="100dp"
         android:layout_marginTop="120dp"
-        android:text="Start Recording" />
+        android:text="Listen Audio" />
+
 
     <Button
-        android:id="@+id/btnPlay"
+        android:id="@+id/btnyes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="100dp"
-        android:text="Play Recorded Audio" />
+        android:layout_marginTop="120dp"
+        android:text="Verified(Yes)" />
+
 
     <Button
-        android:id="@+id/pushtodbbut"
+        android:id="@+id/btnno"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Submit to save"></Button>
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="120dp"
+        android:text="Verified(No)" />
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/setter"></TextView>
 </android.widget.LinearLayout>

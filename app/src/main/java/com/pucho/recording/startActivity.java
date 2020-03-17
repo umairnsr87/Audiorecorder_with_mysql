@@ -18,6 +18,7 @@ import java.util.List;
 public class startActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private String str;
+    private String flag=null;
     private Button navEnglish;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,8 @@ public class startActivity extends AppCompatActivity implements AdapterView.OnIt
         setContentView(R.layout.activity_start);
         navEnglish=findViewById(R.id.navEnglish);
 
+        Intent intent=getIntent();;
+        flag=intent.getStringExtra("flag");
 
         //going to english Activity
         navEnglish.setOnClickListener(new View.OnClickListener() {
@@ -34,19 +37,36 @@ public class startActivity extends AppCompatActivity implements AdapterView.OnIt
                 {
                     case "English":
                     {
+
+                        //checking whether data is coming from listen button or speak button
+                        if(flag.equals("speak"))
+                        {
+                            //data coming from speak bitton
                         Intent i = new Intent(startActivity.this, MainActivity.class);
                         i.putExtra("values", str);
                         Log.i("Intent extra",str);
                         startActivity(i);
                         finish();
+                        }else if(flag.equals("listen"))
+                        {
+                            //data coming from listen button
+                            Intent i = new Intent(startActivity.this, ListenActivity.class);
+                            i.putExtra("values", str);
+                            Log.i("Intent extra",str);
+                            startActivity(i);
+                            finish();
+
+                        }
                         break;
                     }
                     case "Hindi":
                     {
+                        //TODO:implement hindi language stuff
                         Toast.makeText(startActivity.this,"Hindi Selected",Toast.LENGTH_SHORT).show();
 
                         break;
                     }
+                    //todo implement rest of the languages
                     default:
                     {
                         Toast.makeText(startActivity.this,"Please select a language...",Toast.LENGTH_SHORT).show();

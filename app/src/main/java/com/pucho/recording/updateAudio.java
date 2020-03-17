@@ -17,9 +17,8 @@ public class updateAudio {
     public int updateaudio(File f)
     {
 
-        Uri uri=Uri.fromFile(new File(f.getPath()));
-
-        Log.d("uri is ",uri.getPath());
+        //Uri uri=Uri.fromFile(new File(f.getPath()));
+        //Log.d("uri is ",uri.getPath());
 
         try {
             //String sql = "INSERT INTO  registration(username, email) values (?, ?)";

@@ -130,7 +130,11 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Recording Started Playing", Toast.LENGTH_LONG).show();
                     } catch (IOException e) {
                         Log.e("audio tag pucho", e.getMessage());
-                    }
+                    }finally {
+
+                    mPlayer.stop();
+                    mPlayer.release();
+                }
 
                 }
         });
@@ -175,52 +179,5 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(MainActivity.this, new String[]{RECORD_AUDIO, WRITE_EXTERNAL_STORAGE}, REQUEST_AUDIO_PERMISSION_CODE);
     }
 
-//function to retrive audio from db to hear
-    public void retriveaudio() throws IOException {
-        String path=Environment.getExternalStorageDirectory().getAbsolutePath();
-        path+="/fetched_data.3gp";
-        File file=new File(path);
-        FileOutputStream outputStream=new FileOutputStream(file);
-        try {
-            String sql = "select * from English where flag='"+"no"+"' limit 1";
-            Statement statement = null;
-                conn=MyTask.getCon();
-                statement = conn.createStatement();
-                ResultSet rs=statement.executeQuery(sql);
-                while(rs.next())
-                {
-
-                    InputStream inputStream=rs.getBinaryStream("audio");
-                    byte[] buffer=new byte[1024];
-                    while(inputStream.read(buffer)>0)
-                    {
-                        outputStream.write(buffer);
-                    }
-                }
-
-
-            textView.setText("data fetched");
-            textView.setVisibility(View.VISIBLE);
-
-
-
-        }catch(Exception e)
-        {
-            Log.e("Exception occured",e.getMessage());
-        }finally
-        {
-            if(outputStream!=null)
-            {
-                outputStream.close();
-            }
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                Log.e("Exception occured",e.getMessage());
-                e.printStackTrace();
-            }
-        }
-
-    }
 }
 
