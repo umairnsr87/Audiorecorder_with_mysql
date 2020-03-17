@@ -66,6 +66,7 @@ public class ListenActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             mPlayer.stop();
+                            mPlayer.reset();
                             mPlayer.release();
                         }
                     }, 20000);
