@@ -22,11 +22,11 @@ public class DataAudio extends Thread{
         String sql="select * from "+s+" where audio is null limit 1";
         Log.i("table name is ",sql);
 
-         try{
+        try{
 
 
-             ResultSet rs=null;
-             con=MyTask.getCon();
+            ResultSet rs=null;
+            con=MyTask.getCon();
             Statement st=con.createStatement();
             rs=st.executeQuery(sql);
             while(rs.next())
@@ -39,36 +39,31 @@ public class DataAudio extends Thread{
             Log.e("Data Audio error",e.getMessage());
         }
         finally {
-             try {
-                 con.close();
-             } catch (SQLException e) {
-                 e.printStackTrace();
-             }
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 
-         }
-
-
+        }
         return data;
     }
 
     public void updateaudio(String path,String condition,String tablename)
     {
-       // Log.d("uri is ",mFileName);
-
-
         try {
             String sql = "update "+tablename+" set audio = ? where textdata='"+condition+"'";
             Log.i("updateaudio",tablename);
             Log.i("updateaudio",condition);
-                PreparedStatement statement = null;
-                con=MyTask.getCon();
-                statement = con.prepareStatement(sql);
-                //statement.setString(1, "Tom");
-                File file=new File(path);
-                InputStream inputStream = new FileInputStream(file);
-                Log.d("Input stream",inputStream.toString());
-                statement.setBinaryStream(1,inputStream,file.length());
-                statement.executeUpdate();
+            PreparedStatement statement = null;
+            con=MyTask.getCon();
+            statement = con.prepareStatement(sql);
+            //statement.setString(1, "Tom");
+            File file=new File(path);
+            InputStream inputStream = new FileInputStream(file);
+            Log.d("Input stream",inputStream.toString());
+            statement.setBinaryStream(1,inputStream,file.length());
+            statement.executeUpdate();
 
 //            textView.setText("data inserted");
 //            textView.setVisibility(View.VISIBLE);

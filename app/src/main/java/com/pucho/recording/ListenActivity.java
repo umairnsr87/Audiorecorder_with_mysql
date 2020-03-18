@@ -41,6 +41,12 @@ public class ListenActivity extends AppCompatActivity {
         setteraudiotext.setVisibility(View.VISIBLE);
 
 
+        //setting the text data to setter text
+        setteraudiotext.setText(textdata);
+
+
+
+
         //playing the audio after fetching it from db
         btnplay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +67,9 @@ public class ListenActivity extends AppCompatActivity {
                     Log.e("exception occured audio",e.getMessage());
                     e.printStackTrace();
                 }finally {
+
+                    btnyes.setVisibility(View.VISIBLE);
+                    btnno.setVisibility(View.VISIBLE);
                     //emptying the resources after 20seconds
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -76,12 +85,32 @@ public class ListenActivity extends AppCompatActivity {
             }
         });
 
-        //setting the text data to setter text
-        setteraudiotext.setText(textdata);
 
+//setting audio is verified
+        btnyes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listenSetter.verifiedyes(data_intent,textdata);
+                Toast.makeText(getApplicationContext(), "Audio is Genuine", Toast.LENGTH_LONG).show();
+                finish();
+                startActivity(getIntent());
 
+            }
+        });
 
+        //setting audio is not verified
+        btnno.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                listenSetter.verifiedno(data_intent,textdata);
+                //listenSetter.verifiedno(data_intent,textdata);
+                Toast.makeText(getApplicationContext(), "Audio is not Genuine", Toast.LENGTH_LONG).show();
+                finish();
+                startActivity(getIntent());
+
+            }
+        });
 
     }
 }

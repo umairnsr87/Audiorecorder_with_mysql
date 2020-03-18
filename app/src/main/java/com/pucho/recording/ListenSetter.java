@@ -15,11 +15,13 @@ import java.sql.Statement;
 
 public class ListenSetter {
     Connection con=null;
+
+//setting the textview
     public String setTextView(String s)
     {
             String data=s;
 
-            String sql="select * from "+s+" limit 1";
+            String sql="select * from "+s+" where flag='"+"no"+"' limit 1";
             Log.i("table name is ",sql);
             try{
                 ResultSet rs=null;
@@ -56,7 +58,7 @@ public class ListenSetter {
         File file=new File(path);
         FileOutputStream outputStream=new FileOutputStream(file);
         try {
-            String sql = "select * from English where flag='"+"no"+"' limit 1";
+            String sql = "select audio from English where flag='"+"no"+"' limit 1";
             Statement statement = null;
             con=MyTask.getCon();
             statement = con.createStatement();
@@ -71,12 +73,6 @@ public class ListenSetter {
                     outputStream.write(buffer);
                 }
             }
-
-
-//            textView.setText("data fetched");
-//            textView.setVisibility(View.VISIBLE);
-
-
 
         }catch(Exception e)
         {
@@ -95,5 +91,47 @@ public class ListenSetter {
             }
         }
 
+    }
+
+    public void verifiedyes(String tablename,String texttomatch){
+        //step1:making the connection
+        try {
+            con = MyTask.getCon();
+            String sql = "update " + tablename + " set flag='" + "yes" + "',verified='" + "yes" + "' where textdata='" + texttomatch + "'";
+            Statement statement = con.createStatement();
+            statement.execute(sql);
+        }catch (Exception e)
+        {
+            Log.i("verifiedyes",e.getMessage());
+
+        }finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                Log.i("verifiedyes",e.getMessage());
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void verifiedno(String tablename,String texttomatch){
+        //step1:making the connection
+        try {
+            con = MyTask.getCon();
+            String sql = "update " + tablename + " set flag='" + "yes" + "',verified='" + "no" + "' where textdata='" + texttomatch + "'";
+            Statement statement = con.createStatement();
+            statement.execute(sql);
+        }catch (Exception e)
+        {
+            Log.i("verifiedno",e.getMessage());
+
+        }finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                Log.i("verifiedno",e.getMessage());
+                e.printStackTrace();
+            }
+        }
     }
 }
