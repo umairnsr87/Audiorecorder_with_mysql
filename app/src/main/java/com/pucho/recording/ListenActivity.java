@@ -33,7 +33,7 @@ public class ListenActivity extends AppCompatActivity {
 
 
         Intent intent=getIntent();
-         data_intent= intent.getStringExtra("values");
+        data_intent = intent.getStringExtra("values");
         Log.i("data_intent",data_intent);
 
         ListenSetter listenSetter=new ListenSetter();

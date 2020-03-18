@@ -16,39 +16,35 @@ import java.sql.Statement;
 public class ListenSetter {
     Connection con=null;
 
-//setting the textview
+    //setting the textview
     public String setTextView(String s)
     {
-            String data=s;
+        String data = s;
 
-            String sql="select * from "+s+" where flag='"+"no"+"' limit 1";
-            Log.i("table name is ",sql);
-            try{
-                ResultSet rs=null;
-                con=MyTask.getCon();
-                Statement st=con.createStatement();
-                rs=st.executeQuery(sql);
-                while(rs.next())
-                {
-                    data=rs.getString(2);
-                }
+        String sql = "select * from " + s + " where flag='" + "no" + "' limit 1";
+        Log.i("table name is ", sql);
+        try {
+            ResultSet rs = null;
+            con = MyTask.getCon();
+            Statement st = con.createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                data = rs.getString(2);
             }
-            catch (Exception e)
-            {
-                Log.e("Data Audio error",e.getMessage());
-            }
-            finally {
-                try {
-                    con.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-
+        } catch (Exception e) {
+            Log.e("Data Audio error", e.getMessage());
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
 
-
-            return data;
         }
+
+
+        return data;
+    }
 
 
     //function to retrive audio from db to hear

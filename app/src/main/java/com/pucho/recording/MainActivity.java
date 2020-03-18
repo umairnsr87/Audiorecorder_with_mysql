@@ -48,9 +48,9 @@ public class MainActivity extends AppCompatActivity {
     private static String mFileName = null;
     public static final int REQUEST_AUDIO_PERMISSION_CODE = 1;
     private TextView settertext;
-    Connection conn=null;
-    String data_intent=null;
-    String textdata=null;
+    // private Connection conn=null;
+    private String data_intent = null;
+    private String textdata = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,10 +128,10 @@ public class MainActivity extends AppCompatActivity {
                     mPlayer.setDataSource(path);
                     mPlayer.prepare();
                     mPlayer.start();
-                        Toast.makeText(getApplicationContext(), "Recording Started Playing", Toast.LENGTH_LONG).show();
-                    } catch (IOException e) {
-                        Log.e("audio tag pucho", e.getMessage());
-                    }finally {
+                    Toast.makeText(getApplicationContext(), "Recording Started Playing", Toast.LENGTH_LONG).show();
+                } catch (IOException e) {
+                    Log.e("audio tag pucho", e.getMessage());
+                } finally {
 
                     //emptying the resources after 20 seconds
                     new Handler().postDelayed(new Runnable() {
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
 
-                }
+            }
         });
 
         //saving the recorded audio to database

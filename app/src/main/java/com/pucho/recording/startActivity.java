@@ -1,7 +1,6 @@
 package com.pucho.recording;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -74,9 +73,6 @@ public class startActivity extends AppCompatActivity implements AdapterView.OnIt
 
 
                 }
-
-
-
             }
         });
 
@@ -112,8 +108,10 @@ public class startActivity extends AppCompatActivity implements AdapterView.OnIt
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // On selecting a spinner item
         String item = parent.getItemAtPosition(position).toString();
+
+        //todo:adding a spinner dependent
 //
-//        switch(id):
+//        switch(item):
 //        {
 //            case R.id.
 //        }

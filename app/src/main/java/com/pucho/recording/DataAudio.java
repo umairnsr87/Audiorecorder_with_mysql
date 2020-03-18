@@ -14,7 +14,8 @@ import java.sql.Statement;
 
 public class DataAudio extends Thread{
     Connection con=null;
-    //setting the textview in audio activity
+
+    //setting the textview in audio record activity
     public String textFetcher(String s)
     {
         String data=s;
@@ -23,8 +24,6 @@ public class DataAudio extends Thread{
         Log.i("table name is ",sql);
 
         try{
-
-
             ResultSet rs=null;
             con=MyTask.getCon();
             Statement st=con.createStatement();
@@ -49,31 +48,22 @@ public class DataAudio extends Thread{
         return data;
     }
 
-    public void updateaudio(String path,String condition,String tablename)
-    {
+    //update the recorded audio by the user
+    public void updateaudio(String path, String condition, String tablename) {
         try {
             String sql = "update "+tablename+" set audio = ? where textdata='"+condition+"'";
-            Log.i("updateaudio",tablename);
-            Log.i("updateaudio",condition);
             PreparedStatement statement = null;
             con=MyTask.getCon();
             statement = con.prepareStatement(sql);
-            //statement.setString(1, "Tom");
             File file=new File(path);
             InputStream inputStream = new FileInputStream(file);
-            Log.d("Input stream",inputStream.toString());
             statement.setBinaryStream(1,inputStream,file.length());
             statement.executeUpdate();
 
-//            textView.setText("data inserted");
-//            textView.setVisibility(View.VISIBLE);
 
-
-        }catch(Exception e)
-        {
+        }catch(Exception e) {
             Log.e("Exception occured",e.getMessage());
-        }finally
-        {
+        }finally {
             try {
                 con.close();
             } catch (SQLException e) {
